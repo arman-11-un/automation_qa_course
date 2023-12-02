@@ -5,4 +5,4 @@ def driver():
 def fgdf():
     pass
 
-print("Ez123")
+print("Ez123.")
