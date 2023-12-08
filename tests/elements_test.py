@@ -65,3 +65,39 @@ class TestElements:
             web_table_page.search_som_people(key_word)
             table_result = web_table_page.check_search_person()
             assert key_word in table_result, 'the person was not found in the table '
+
+        def test_web_table_person_info_firstname(self, driver):
+            web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
+            web_table_page.open()
+            lastname = web_table_page.edd_new_person()[1]
+            web_table_page.search_som_people(lastname)
+            firstname = web_table_page.update_peron_firstname()
+            row = web_table_page.check_search_person()
+
+            assert firstname in row, 'the person has not been changed'
+
+        def test_web_table_person_info(self, driver):
+            web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
+            web_table_page.open()
+            firstname = web_table_page.edd_new_person()[0]
+            web_table_page.search_som_people(firstname)
+            update_info = web_table_page.update_person_info()
+            row = web_table_page.check_search_person()
+            assert update_info in row, 'the person has not been changed'
+
+        def test_web_table_delete_person(self, driver):
+            web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
+            web_table_page.open()
+            email = web_table_page.edd_new_person()[3]
+            web_table_page.search_som_people(email)
+            web_table_page.delete_person()
+            text = web_table_page.check_deleted()
+
+            assert text == 'No rows found', 'User data is not deleted'
+
+        def test_web_table_change_count_row(self, driver):
+            web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
+            web_table_page.open()
+            count = web_table_page.select_up_to_some_rows()
+            assert count == [5, 10, 20, 25, 50,
+                             100], 'the number of rows in the table has not been changed or incorrectly'

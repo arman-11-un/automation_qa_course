@@ -116,3 +116,50 @@ class WebTablePage(BasePage):
         delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
         row = delete_button.find_element(By.XPATH, self.locators.ROW_PARENT)
         return row.text.splitlines()
+
+    def update_peron_firstname(self):
+        person_info = next(generated_person())
+        firstname = person_info.firstname
+        self.element_is_visibale(self.locators.UPDATE_BUTTON).click()
+        self.element_is_visibale(self.locators.FIRSTNAME_INPUT).clear()
+        self.element_is_visibale(self.locators.FIRSTNAME_INPUT).send_keys(firstname)
+        self.element_is_visibale(self.locators.SUBMIT_BUTTON).click()
+        return firstname
+
+    def update_person_info(self):
+        person_info = next(generated_person())
+        update_info = {'email': person_info.email, 'salary': person_info.salary,
+                       'lastname': person_info.lastname, 'firstname': person_info.firstname,
+                       'department': person_info.department, 'age': person_info.age}
+        update_locator = {'email': self.locators.EMAIL_INPUT,
+                          'salary': self.locators.SALARY_INPUT,
+                          'lastname': self.locators.LASTNAME_INPUT, 'firstname': self.locators.FIRSTNAME_INPUT,
+                          'department': self.locators.UPDATE_BUTTON, 'age': self.locators.AGE_INPUT, }
+        update = random.choice(list(update_info.keys()))
+        self.element_is_visibale(self.locators.UPDATE_BUTTON).click()
+        self.element_is_visibale(update_locator[update]).clear()
+        self.element_is_visibale(update_locator[update]).send_keys(update_info[update])
+        self.element_is_visibale(self.locators.SUBMIT_BUTTON).click()
+        return str(update_info[update])
+
+    def delete_person(self):
+        self.element_is_visibale(self.locators.DELETE_BUTTON).click()
+
+    def check_deleted(self):
+        return self.element_is_present(self.locators.NO_ROWS_FOUND).text
+
+    def select_up_to_some_rows(self):
+        count = [5, 10, 20, 25, 50, 100]
+        data = []
+        for x in count:
+            count_row_button = self.element_is_visibale(self.locators.COUNT_ROW_LIST)
+            self.go_to_element(count_row_button)
+            count_row_button.click()
+
+            self.element_is_visibale((By.CSS_SELECTOR, f'option[value="{x}"]'))
+            data.append(self.check_count_rows())
+        return data
+
+    def check_count_rows(self):
+        list_rows = self.element_are_present(self.locators.FULL_PEOPLE_LIST)
+        return len(list_rows)
