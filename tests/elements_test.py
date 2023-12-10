@@ -5,9 +5,6 @@ from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebT
 from confTest import driver
 
 
-
-
-
 class TestElements:
     class TestTextBox:
 
@@ -113,11 +110,20 @@ class TestElements:
             double = button_page.click_on_different_button('double')
             right = button_page.click_on_different_button('right')
             click = button_page.click_on_different_button('click')
-            print(double)
-            print(right)
-            print(click)
+
             assert double == "You have done a double click", 'The double click button wos not pressed'
             assert right == "You have done a right click", 'The right click button wos not pressed'
             assert click == "You have done a dynamic click", 'The dynamic click button wos not pressed'
 
-"
+        def test_double_button(self, driver):
+            button = ButtonsPage(driver, 'https://demoqa.com/buttons')
+            button.open()
+            double = button.click_on_double()
+            time.sleep(2)
+            right = button.click_on_right()
+            time.sleep(2)
+            click = button.click_on()
+            time.sleep(2)
+            assert double == "You have done a double click", 'The double click button wos not pressed'
+            assert right == "You have done a right click", 'The right click button wos not pressed'
+            assert click == "You have done a dynamic click", 'The dynamic click button wos not pressed'

@@ -183,3 +183,15 @@ class ButtonsPage(BasePage):
 
     def check_clicked_on_the_button(self, element):
         return self.element_is_present(element).text
+
+    def click_on_double(self):
+        self.action_double_click(self.element_is_visibale(self.locators.DOUBLE_BUTTON))
+        return self.element_is_present(self.locators.SUCCESS_DOUBLE).text
+
+    def click_on_right(self):
+        self.action_right_click(self.element_is_visibale(self.locators.RIGHT_CLICK_BUTTON))
+        return self.element_is_present(self.locators.SUCCESS_RIGHT).text
+
+    def click_on(self):
+        self.element_is_visibale(self.locators.CLICK_ME_BUTTON).click()
+        return self.element_is_present(self.locators.SUCCESS_CLICK_ME).text
