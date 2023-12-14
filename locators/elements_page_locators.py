@@ -69,3 +69,16 @@ class ButtonsPageLocators:
     SUCCESS_DOUBLE = (By.XPATH, '//p[@id="doubleClickMessage"]')
     SUCCESS_RIGHT = (By.XPATH, '//p[@id="rightClickMessage"]')
     SUCCESS_CLICK_ME = (By.XPATH, '//p[@id="dynamicClickMessage"]')
+
+
+class LinksPageLocators:
+    SIMPLE_LINK = (By.XPATH, '//a[@id="simpleLink"]')
+    DYNAMIC_LINK = (By.XPATH, '//a[@id="dynamicLink"]')
+    CREATED_LINK = (By.XPATH, '//a[@id="created"]')
+    NO_CONTENT = (By.XPATH, '//a[@id="no-content"]')
+    MOVED = (By.XPATH, '//a[@id="moved"]')
+    BAD_REQUEST = (By.XPATH, '//a[@id="bad-request"]')
+    UNAUTHORIZED = (By.XPATH, '//a[@id="unauthorized"]')
+    FORBIDDEN = (By.XPATH, '//a[@id="forbidden"]')
+    NOT_FOUND = (By.XPATH, '//a[@id="invalid-url"]')
+

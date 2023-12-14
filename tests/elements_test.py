@@ -1,7 +1,7 @@
 import random
 import time
 
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage
 from confTest import driver
 
 
@@ -25,6 +25,7 @@ class TestElements:
             check_box_page.open()
             check_box_page.open_full_list()
             check_box_page.click_random_checkbox()
+
             input_checkbox = check_box_page.get_checked_checkboxes()
             output_result = check_box_page.get_output_resalt()
             print(input_checkbox)
@@ -127,3 +128,38 @@ class TestElements:
             assert double == "You have done a double click", 'The double click button wos not pressed'
             assert right == "You have done a right click", 'The right click button wos not pressed'
             assert click == "You have done a dynamic click", 'The dynamic click button wos not pressed'
+
+    class TestLinksPage:
+
+        def test_check_link(self, driver):
+            links_page = LinksPage(driver, 'https://demoqa.com/links')
+            links_page.open()
+            href_link = links_page.check_new_tab_simple_link()[0]
+            current_url = links_page.check_new_tab_simple_link()[1]
+            assert href_link == current_url, 'the link is broken or url is incorrect'
+
+        def test_dynamic_link(self, driver):
+            links_page = LinksPage(driver, 'https://demoqa.com/links')
+            links_page.open()
+            href_link = links_page.check_new_tab_dynamic_link()[0]
+            current_url = links_page.check_new_tab_dynamic_link()[1]
+            assert href_link == current_url
+
+        def test_links(self, driver):
+            links_page = LinksPage(driver, 'https://demoqa.com/links')
+            links_page.open()
+            created = links_page.check_broken_link('https://demoqa.com/Created')
+            no_content = links_page.check_broken_link('https://demoqa.com/No-Content')
+            moved = links_page.check_broken_link('https://demoqa.com/Moved')
+            bad_request = links_page.check_broken_link('https://demoqa.com/Bad-Request')
+            unauthorized = links_page.check_broken_link('https://demoqa.com/Unauthorized')
+            forbidden = links_page.check_broken_link('https://demoqa.com/Forbidden')
+            not_found = links_page.check_broken_link('https://demoqa.com/invalid-url')
+
+            assert created == 201, 'the link works or the status code is not 201'
+            assert no_content == 204, 'the link works or the status code is not 204'
+            assert moved == 301, 'the link works or the status code is not 301'
+            assert bad_request == 400, 'the link works or the status code is not 400'
+            assert unauthorized == 401, 'the link works or the status code is not 401'
+            assert forbidden == 403, 'the link works or the status code is not 403'
+            assert not_found == 404, 'the link works or the status code is not 404'
