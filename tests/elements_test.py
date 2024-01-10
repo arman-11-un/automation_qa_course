@@ -163,3 +163,8 @@ class TestElements:
             assert unauthorized == 401, 'the link works or the status code is not 401'
             assert forbidden == 403, 'the link works or the status code is not 403'
             assert not_found == 404, 'the link works or the status code is not 404'
+
+    class TestUploadAndDownload:
+
+        def test_upload_file(self):
+            pass
